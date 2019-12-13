@@ -40,7 +40,7 @@ class AddRatingView(APIView):
         quote = Quote.objects.get(pk=quote_pk)
         quote.rating += 1
         quote.save()
-        return Response({'status': 'ok'})
+        return Response({'id': quote.pk, 'rating': quote.rating, 'status': 'ok'})
 
 
 class SubRatingView(APIView):
@@ -51,4 +51,4 @@ class SubRatingView(APIView):
         quote = Quote.objects.get(pk=quote_pk)
         quote.rating -= 1
         quote.save()
-        return Response({'status': 'ok'})
+        return Response({'id': quote.pk, 'rating': quote.rating, 'status': 'ok'})
