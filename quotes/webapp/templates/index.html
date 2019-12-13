@@ -8,13 +8,123 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>Quotes</title>
+    <title>Цитаты</title>
 </head>
 <body>
-<div class="container">
 
+<div class="container">
+    {#    Header с заголовком и кнопками для входа и выхода#}
+    <h1 class="text-center mt-3 mb-4">Сборник цитат...
+
+        <button type="button" class="btn btn-primary float-right mt-3 mr-2 invisible" id="auth_logout"
+                onclick="logoutFunc()">Выйти
+        </button>
+         <button type="button" class="btn btn-primary  float-right mt-3" data-toggle="modal"
+                data-target="#authModal" id="auth_login">Войти
+        </button>
+    </h1>
+
+
+    {#    Контейнер для вывода сообщений уведомлений#}
+    <div class="alert alert-success text-center col-8 offset-2 d-none" role="alert" id="message"></div>
+
+    {#    Форма для создания новой цитаты#}
+    <h4>Добавить цитату</h4>
+    <div class="form-row align-content-between">
+        <div class="col-6">
+            <input type="text" class="form-control" placeholder="Текст цитаты" id="text">
+        </div>
+        <div class="col-2">
+            <input type="text" class="form-control" placeholder="Автор" id="author">
+        </div>
+        <div class="col-2">
+            <input type="email" class="form-control" placeholder="Email" id="email">
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-success" id="add_quote">Добавить</button>
+        </div>
+    </div>
+
+    {#    Контейнер для вывода цитат#}
+    <div class="quotes"></div>
+
+    {#    Кнопка перехода на главную страницу со всеми цитатами#}
+    <button class="btn btn-info mt-3 col-2 offset-5 d-none" onclick="backToMain()" id="back_to_main">Назад</button>
 </div>
 
+{#Модальное окно входа в систему#}
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Войти в систему</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="login" class="col-form-label">Логин</label>
+                        <input type="text" class="form-control" id="login">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-form-label">Пароль</label>
+                        <input class="form-control" id="password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="loginFunc()">Вход</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{#Модальное окно для редактирования цитаты#}
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Редактировать цитату</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="e_author" class="col-form-label">Автор</label>
+                        <input type="text" class="form-control" id="e_author">
+                    </div>
+                    <div class="form-group">
+                        <label for="e_email" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="e_email">
+                    </div>
+                    <div class="form-group">
+                        <label for="e_text" class="col-form-label">Текст</label>
+                        <input type="text" class="form-control" id="e_text">
+                    </div>
+                    <div class="form-group">
+                        <label for="e_status" class="col-form-label">Статус</label>
+                        <select class="form-control" name="" id="e_status">
+                            <option value="new">Новая</option>
+                            <option value="approved">Проверенно</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="e_id">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="editQuote()">Обновить</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="{% static 'js/jquery.min.js' %}"></script>
