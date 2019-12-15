@@ -12,8 +12,8 @@ function getQuotes() {
             if (localStorage.getItem('apiToken')) {
                 $('.edit_quote').removeClass('d-none')
                 $('.delete_quote').removeClass('d-none')
-                $('#auth_login').addClass('invisible')
-                $('#auth_logout').removeClass('invisible')
+                $('#auth_login').addClass('d-none')
+                $('#auth_logout').removeClass('d-none')
             }
         },
         error: function (response, status) {
@@ -204,8 +204,8 @@ function loginFunc() {
         data: JSON.stringify({"username": login, "password": password}),
         success: function (response, status) {
             localStorage.setItem('apiToken', 'Token ' + response.token)
-            $('#auth_login').addClass('invisible')
-            $('#auth_logout').removeClass('invisible')
+            $('#auth_login').addClass('d-none')
+            $('#auth_logout').removeClass('d-none')
             $('.edit_quote').removeClass('d-none')
             $('.delete_quote').removeClass('d-none')
             $('#authModal').modal('hide')
@@ -227,8 +227,8 @@ function logoutFunc() {
         dataType: 'json',
         success: function (response, status) {
             localStorage.removeItem('apiToken')
-            $('#auth_login').removeClass('invisible')
-            $('#auth_logout').addClass('invisible')
+            $('#auth_login').removeClass('d-none')
+            $('#auth_logout').addClass('d-none')
             $('.edit_quote').addClass('d-none')
             $('.delete_quote').addClass('d-none')
             getQuotes()
